@@ -1,8 +1,18 @@
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
+	static char	buffer[BUFFER_SIZE];
+	static char *leftover;
+	ssize_t		bytes_read;
 
+	
+	leftover = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	leftover = read(fd, leftover, BUFFER_SIZE)
+	while //true??
+		if
 }
 
 function get_next_line(fd):
@@ -10,26 +20,26 @@ function get_next_line(fd):
 	if fd < 0 or BUFFER_SIZE <= 0:
 		return NULL
 	while true:
-        if leftover có chứa '\n':
-            // Tìm vị trí \n
-            // Cắt từ đầu đến \n => line_to_return
-            // Phần sau \n => cập nhật leftover
-            return line_to_return
+		if leftover có chứa '\n':
+			// Tìm vị trí \n
+			// Cắt từ đầu đến \n => line_to_return
+			// Phần sau \n => cập nhật leftover
+			return line_to_return
 
-        // Nếu không có \n, đọc thêm dữ liệu
-        bytes_read = read(fd, buffer, BUFFER_SIZE)
-        if bytes_read == -1:
-            // Lỗi khi đọc
-            return NULL
+		// Nếu không có \n, đọc thêm dữ liệu
+		bytes_read = read(fd, buffer, BUFFER_SIZE)
+		if bytes_read == -1:
+			// Lỗi khi đọc
+			return NULL
 
-        if bytes_read == 0:
-            // Hết file
-            if leftover không rỗng:
-                line_to_return = leftover
-                leftover = NULL
-                return line_to_return
-            else:
-                return NULL
+		if bytes_read == 0:
+			// Hết file
+			if leftover không rỗng:
+				line_to_return = leftover
+				leftover = NULL
+				return line_to_return
+			else:
+				return NULL
 
-        // Ghép buffer vừa đọc vào leftover
-        leftover = leftover + buffer
+		// Ghép buffer vừa đọc vào leftover
+		leftover = leftover + buffer
