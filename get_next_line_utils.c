@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phly <phly@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/18 21:28:12 by phly              #+#    #+#             */
+/*   Updated: 2025/08/18 21:28:12 by phly             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 int	ft_strlen(const char *str)
@@ -95,64 +107,6 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 	sub_str[i] = '\0';
 	return (sub_str);
 }
-
-// char	*ft_get_line_from_leftover(char *str)
-// {
-// 	int		i;
-// 	int		pos;
-// 	char	*s1;
-
-// 	i = 0;
-// 	pos = ft_find_newline(str);
-// 	if (pos == -1)
-// 	{
-// 		s1 = ft_strdup(str);
-// 		return (s1);
-// 	}
-// 	else
-// 	{
-// 		s1 = malloc((pos + 2) * sizeof(char));
-// 		if (!s1)
-// 			return (NULL);
-// 		while (i < pos + 1)
-// 		{
-// 			s1[i] = str[i];
-// 			i++;
-// 		}
-// 		s1[i] = '\0';
-// 	}
-// 	return (s1);
-// }
-
-// char	*ft_update_leftover(char *str)
-// {
-// 	char	*new_leftover;
-// 	int		pos;
-// 	int		start;
-// 	int		i;
-
-// 	pos = ft_find_newline(str);
-// 	if (pos == -1)
-// 	{
-// 		free(str);
-// 		return (NULL);
-// 	}
-// 	start = pos + 1;
-// 	if (str[start] == '\0')
-// 	{
-// 		free(str);
-// 		return (NULL);
-// 	}
-// 	new_leftover = malloc((ft_strlen(str) - start + 1) * sizeof(char));
-// 	if (!new_leftover)
-// 		return (NULL);
-// 	i = 0;
-// 	while (str[start] != '\0')
-// 		new_leftover[i++] = str[start++];
-// 	free(str);
-// 	new_leftover[i] = '\0';
-// 	return (new_leftover);
-// }
 
 // int main()
 // {
