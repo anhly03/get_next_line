@@ -2,15 +2,13 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
-	static char *leftover;
+	static char	*buffer[BUFFER_SIZE];
 	ssize_t		bytes_read;
+	char		*line_to_return;
 
-	
-	leftover = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	leftover = read(fd, leftover, BUFFER_SIZE)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while //true??
 		if
 }
