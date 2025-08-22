@@ -50,19 +50,29 @@ char	*ft_update_leftover(char *str)
 	pos = ft_find_newline(str);
 	start = pos + 1;
 	if (pos == -1 || str[start] == '\0')
-	{
-		free(str);
 		return (NULL);
-	}
 	new_leftover = malloc((ft_strlen(str) - start + 1) * sizeof(char));
 	if (!new_leftover)
 		return (NULL);
 	i = 0;
 	while (str[start] != '\0')
 		new_leftover[i++] = str[start++];
-	free(str);
 	new_leftover[i] = '\0';
 	return (new_leftover);
+}
+
+static char	*extract_line(char *leftover)
+{
+	int		pos;
+	char	*line;
+	char	*new_leftover;
+
+	pos = ft_find_newline(leftover);
+	if (pos == -1)
+		return (NULL);
+	line = ft_substr(leftover, 0, pos + 1);
+	new_leftover = ft_update_leftover(leftover);
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -78,12 +88,7 @@ char	*get_next_line(int fd)
 	while (1)
 	{
 		pos = ft_find_newline(leftover);
-		if (pos != -1)
-		{
-			line_to_return = ft_substr(leftover, 0, pos + 1);
-			leftover = ft_update_leftover(leftover);
-			return (line_to_return);
-		}
+		line_to_return = extract_line(leftover);
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 			return (NULL);
@@ -98,25 +103,25 @@ char	*get_next_line(int fd)
 	}
 }
 
-#include <fcntl.h>   // open()
-#include <stdio.h>   // printf()
+// #include <fcntl.h>   // open()
+// #include <stdio.h>   // printf()
 
-int main(void)
-{
-    int fd;
-    char *line;
+// int main(void)
+// {
+//     int fd;
+//     char *line;
 
-    fd = open("test.txt", O_RDONLY);
-    if (fd == -1)
-    {
-        perror("Error opening file");
-        return (1);
-    }
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line); // mỗi lần gọi trả về 1 dòng
-        free(line);
-    }
-    close(fd);
-    return (0);
-}
+//     fd = open("test.txt", O_RDONLY);
+//     if (fd == -1)
+//     {
+//         perror("Error opening file");
+//         return (1);
+//     }
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s", line); // mỗi lần gọi trả về 1 dòng
+//         free(line);
+//     }
+//     close(fd);
+//     return (0);
+// }

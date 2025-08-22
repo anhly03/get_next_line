@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_find_newline(const char *str)
+int	ft_find_newline(char *str)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ int	ft_find_newline(const char *str)
 	return (-1);
 }
 
-char	*ft_strdup(const char *str)
+char	*ft_strdup(char *str)
 {
 	size_t	i;
 	char	*str_new;
@@ -58,7 +58,7 @@ char	*ft_strdup(const char *str)
 	return (str_new);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*new_str;
 	size_t	i;
@@ -83,12 +83,12 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (new_str);
 }
 
-char	*ft_substr(const char *str, unsigned size_t start, unsigned size_t len)
+char	*ft_substr(char *str, size_t start, size_t len)
 {
-	unsigned size_t	str_len;
-	unsigned size_t	actual_len;
-	char			*sub_str;
-	unsigned size_t	i;
+	size_t	str_len;
+	size_t	actual_len;
+	char	*sub_str;
+	size_t	i;
 
 	if (str == NULL)
 		return (NULL);
@@ -124,5 +124,3 @@ char	*ft_substr(const char *str, unsigned size_t start, unsigned size_t len)
 
 //     return 0;
 // }
-
-
