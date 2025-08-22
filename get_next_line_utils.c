@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -40,9 +40,9 @@ int	ft_find_newline(const char *str)
 
 char	*ft_strdup(const char *str)
 {
-	int		i;
+	size_t	i;
 	char	*str_new;
-	int		len;
+	size_t	len;
 
 	len = ft_strlen(str);
 	str_new = malloc((len + 1) * sizeof(char));
@@ -61,8 +61,8 @@ char	*ft_strdup(const char *str)
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*new_str;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	if (s1 == NULL)
 		s1 = ft_strdup("");
@@ -83,12 +83,12 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (new_str);
 }
 
-char	*ft_substr(const char *str, unsigned int start, size_t len)
+char	*ft_substr(const char *str, unsigned size_t start, unsigned size_t len)
 {
-	size_t	str_len;
-	size_t	actual_len;
-	char	*sub_str;
-	int		i;
+	unsigned size_t	str_len;
+	unsigned size_t	actual_len;
+	char			*sub_str;
+	unsigned size_t	i;
 
 	if (str == NULL)
 		return (NULL);
@@ -108,7 +108,7 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 	return (sub_str);
 }
 
-// int main()
+// size_t main()
 // {
 //     char *leftover = ft_strdup("Hello\nWorld\nThis is a test\n");
 //     char *line;
@@ -116,7 +116,7 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 //     while (leftover) // còn leftover mới đọc tiếp
 //     {
 //         line = ft_get_line_from_leftover(leftover);
-//         printf("Line: %s", line); // nhớ line đã có '\n' nếu có
+//         prsize_tf("Line: %s", line); // nhớ line đã có '\n' nếu có
 //         free(line);
 
 //         leftover = ft_update_leftover(leftover);

@@ -69,47 +69,54 @@ char	*get_next_line(int fd)
 {
 	static char	*leftover;
 	char		buffer[BUFFER_SIZE + 1];
-	ssize_t		bytes_read;
+	int			bytes_read;
 	char		*line_to_return;
 	int			pos;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	leftover = NULL;
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	pos = ft_find_newline(buffer);
-	while (pos != -1)
+	while (1)
 	{
-		line_to_return = ft_get_line_from_leftover(buffer);
-		leftover = ft_update_leftover(buffer);
+		pos = ft_find_newline(leftover);
+		if (pos != -1)
+		{
+			line_to_return = ft_substr(leftover, 0, pos + 1);
+			leftover = ft_update_leftover(leftover);
+			return (line_to_return);
+		}
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (NULL);
+		if (bytes_read == 0)
+		{
+			line_to_return = leftover;
+			leftover = NULL;
+			return (line_to_return);
+		}
+		buffer[bytes_read] = '\0';
+		leftover = ft_strjoin(leftover, buffer);
 	}
 }
 
-// function get_next_line(fd):
-// 	static leftover = NULL   // giữ phần dư từ lần trước
-// 	if fd < 0 or BUFFER_SIZE <= 0:
-// 		return NULL
-// 	while true:
-// 		if leftover có chứa '\n':
-// 			// Tìm vị trí \n
-// 			// Cắt từ đầu đến \n => line_to_return
-// 			// Phần sau \n => cập nhật leftover
-// 			return line_to_return
+#include <fcntl.h>   // open()
+#include <stdio.h>   // printf()
 
-// 		// Nếu không có \n, đọc thêm dữ liệu
-// 		bytes_read = read(fd, buffer, BUFFER_SIZE)
-// 		if bytes_read == -1:
-// 			// Lỗi khi đọc
-// 			return NULL
+int main(void)
+{
+    int fd;
+    char *line;
 
-// 		if bytes_read == 0:
-// 			// Hết file
-// 			if leftover không rỗng:
-// 				line_to_return = leftover
-// 				leftover = NULL
-// 				return line_to_return
-// 			else:
-// 				return NULL
-
-// 		// Ghép buffer vừa đọc vào leftover
-// 		leftover = leftover + buffer
+    fd = open("test.txt", O_RDONLY);
+    if (fd == -1)
+    {
+        perror("Error opening file");
+        return (1);
+    }
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line); // mỗi lần gọi trả về 1 dòng
+        free(line);
+    }
+    close(fd);
+    return (0);
+}

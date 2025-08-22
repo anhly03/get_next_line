@@ -22,8 +22,9 @@ char	*get_next_line(int fd);
 int		ft_strlen(const char *str);
 int		ft_find_newline(const char *str);
 char	*ft_strdup(const char *str);
-char	*ft_get_line_from_leftover(const char *str);
-char	*ft_update_leftover(const char *str);
-char	*ft_substr(const char *str, unsigned int start, size_t len);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_substr(const char *str, unsigned int start, unsigned int len);
+char	*ft_get_line_from_leftover(char *str);
+char	*ft_update_leftover(char *str);
 
 #endif
