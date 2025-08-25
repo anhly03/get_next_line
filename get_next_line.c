@@ -47,10 +47,12 @@ char	*ft_update_leftover(char *str)
 	int		start;
 	int		i;
 
-	pos = ft_find_newline(str);
-	start = pos + 1;
-	if (pos == -1 || str[start] == '\0')
+	if (!str)
 		return (NULL);
+	pos = ft_find_newline(str);
+	if (pos == -1 || str[0] == '\0')
+		return (NULL);
+	start = pos + 1;
 	new_leftover = malloc((ft_strlen(str) - start + 1) * sizeof(char));
 	if (!new_leftover)
 		return (NULL);
@@ -61,67 +63,58 @@ char	*ft_update_leftover(char *str)
 	return (new_leftover);
 }
 
-static char	*extract_line(char *leftover)
+char	*ft_extractline(char **leftover)
 {
-	int		pos;
-	char	*line;
-	char	*new_leftover;
+	char	*returned_line;
+	char	*temp;
 
-	pos = ft_find_newline(leftover);
-	if (pos == -1)
+	returned_line = ft_get_line_from_leftover(*leftover);
+	temp = *leftover;
+	*leftover = ft_update_leftover(*leftover);
+	free (temp);
+	return (returned_line);
+}
+
+char	*ft_return_leftover_at_eof(char **leftover)
+{
+	char	*returned_line;
+
+	if (!*leftover)
 		return (NULL);
-	line = ft_substr(leftover, 0, pos + 1);
-	new_leftover = ft_update_leftover(leftover);
-	return (line);
+	returned_line = *leftover;
+	*leftover = NULL;
+	return (returned_line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*leftover;
-	char		buffer[BUFFER_SIZE + 1];
-	int			bytes_read;
-	char		*line_to_return;
-	int			pos;
+	char			buffer[BUFFER_SIZE + 1];
+	static char		*leftover;
+	int				byte_read;
+	char			*returned_line;
+	char			*temp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (1)
 	{
-		pos = ft_find_newline(leftover);
-		line_to_return = extract_line(leftover);
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (ft_find_newline(leftover) != -1)
+			return (ft_extractline(&leftover));
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if (byte_read == -1)
 			return (NULL);
-		if (bytes_read == 0)
-		{
-			line_to_return = leftover;
-			leftover = NULL;
-			return (line_to_return);
-		}
-		buffer[bytes_read] = '\0';
+		if (byte_read == 0)
+			return (ft_return_leftover_at_eof(&leftover));
+		buffer[byte_read] = '\0';
+		temp = leftover;
 		leftover = ft_strjoin(leftover, buffer);
+		free(temp);
 	}
+	return (returned_line);
 }
 
-// #include <fcntl.h>   // open()
-// #include <stdio.h>   // printf()
 
-// int main(void)
-// {
-//     int fd;
-//     char *line;
 
-//     fd = open("test.txt", O_RDONLY);
-//     if (fd == -1)
-//     {
-//         perror("Error opening file");
-//         return (1);
-//     }
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         printf("%s", line); // mỗi lần gọi trả về 1 dòng
-//         free(line);
-//     }
-//     close(fd);
-//     return (0);
-// }
+
+
+
