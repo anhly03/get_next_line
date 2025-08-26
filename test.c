@@ -1,24 +1,24 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   test.c                                             :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: phly <phly@student.42.fr>                  +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/08/22 15:15:15 by phly              #+#    #+#             */
-// /*   Updated: 2025/08/22 15:15:16 by phly             ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phly <phly@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 19:04:44 by phly              #+#    #+#             */
+/*   Updated: 2025/08/26 19:05:17 by phly             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+// #include "get_next_line.h"
+// #include <stdio.h>
 
-int main ()
-{
-	char *result = "Phi\n\nAnh";
-	printf("%s", ft_get_line_from_leftover(result));
-	return 0;
-}
+// int main ()
+// {
+// 	char *result = "Phi\n\nAnh";
+// 	printf("%s", ft_get_line_from_leftover(result));
+// 	return 0;
+// }
 
 // // static char	*extract_line(char *leftover)
 // // {
@@ -45,7 +45,6 @@ int main ()
 // // 	// char *result = ft_update_leftover(leftover);
 // // 	printf("%s", result);
 // // }
-
 
 // int main()
 // {

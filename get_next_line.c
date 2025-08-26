@@ -49,6 +49,8 @@ char	*ft_update_leftover(char *str)
 	if (pos == -1 || str[0] == '\0')
 		return (NULL);
 	start = pos + 1;
+	if (start >= ft_strlen(str) || str[start] == '\0')
+		return (NULL);
 	new_leftover = malloc((ft_strlen(str) - start + 1) * sizeof(char));
 	if (!new_leftover)
 		return (NULL);
@@ -87,7 +89,6 @@ char	*get_next_line(int fd)
 	char			buffer[BUFFER_SIZE + 1];
 	static char		*leftover;
 	int				byte_read;
-	char			*returned_line;
 	char			*temp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -106,11 +107,4 @@ char	*get_next_line(int fd)
 		leftover = ft_strjoin(leftover, buffer);
 		free(temp);
 	}
-	return (returned_line);
 }
-
-
-
-
-
-
