@@ -18,25 +18,21 @@ char	*ft_get_line_from_leftover(char *str)
 	int		pos;
 	char	*s1;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	pos = ft_find_newline(str);
 	if (pos == -1)
+		return (ft_strdup(str));
+	s1 = malloc((pos + 2) * sizeof(char));
+	if (!s1)
+		return (NULL);
+	while (i < pos + 1)
 	{
-		s1 = ft_strdup(str);
-		return (s1);
+		s1[i] = str[i];
+		i++;
 	}
-	else
-	{
-		s1 = malloc((pos + 2) * sizeof(char));
-		if (!s1)
-			return (NULL);
-		while (i < pos + 1)
-		{
-			s1[i] = str[i];
-			i++;
-		}
-		s1[i] = '\0';
-	}
+	s1[i] = '\0';
 	return (s1);
 }
 

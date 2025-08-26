@@ -13,6 +13,13 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
+int main ()
+{
+	char *result = "Phi\n\nAnh";
+	printf("%s", ft_get_line_from_leftover(result));
+	return 0;
+}
+
 // // static char	*extract_line(char *leftover)
 // // {
 // // 	int		pos;
@@ -56,25 +63,25 @@
 //     return 0;
 // }
 
-#include <fcntl.h>   // open()
-#include <stdio.h>   // printf()
+// #include <fcntl.h>   // open()
+// #include <stdio.h>   // printf()
 
-int main(void)
-{
-	int fd;
-	char *line;
+// int main(void)
+// {
+// 	int fd;
+// 	char *line;
 
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		return (1);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s\n", line); // mỗi lần gọi trả về 1 dòng
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		perror("Error opening file");
+// 		return (1);
+// 	}
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%s\n", line); // mỗi lần gọi trả về 1 dòng
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
