@@ -79,6 +79,12 @@ char	*ft_return_leftover_at_eof(char **leftover)
 
 	if (!*leftover)
 		return (NULL);
+	if (*leftover[0] == '\0')
+	{
+		free (*leftover);
+		*leftover = NULL;
+		return (NULL);
+	}
 	returned_line = *leftover;
 	*leftover = NULL;
 	return (returned_line);
@@ -87,7 +93,7 @@ char	*ft_return_leftover_at_eof(char **leftover)
 char	*get_next_line(int fd)
 {
 	char			buffer[BUFFER_SIZE + 1];
-	static char		*leftover;
+	static char		*leftover = NULL;
 	int				byte_read;
 	char			*temp;
 
@@ -99,6 +105,8 @@ char	*get_next_line(int fd)
 			return (ft_extractline(&leftover));
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read == -1)
+			return (NULL);
+		if (byte_read == 0 && leftover == NULL)
 			return (NULL);
 		if (byte_read == 0)
 			return (ft_return_leftover_at_eof(&leftover));
