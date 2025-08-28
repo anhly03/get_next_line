@@ -106,8 +106,10 @@ char	*get_next_line(int fd)
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read == -1)
 			return (NULL);
-		if (byte_read == 0 && leftover == NULL)
+		if (byte_read == 0 && ft_strlen(buffer) == 0)
 			return (NULL);
+		// if (byte_read == 0 && leftover == NULL)
+		// 	return (NULL);
 		if (byte_read == 0)
 			return (ft_return_leftover_at_eof(&leftover));
 		buffer[byte_read] = '\0';
