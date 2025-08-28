@@ -46,10 +46,10 @@ char	*ft_update_leftover(char *str)
 	if (!str)
 		return (NULL);
 	pos = ft_find_newline(str);
-	if (pos == -1 || str[0] == '\0')
+	if (pos == -1)
 		return (NULL);
 	start = pos + 1;
-	if (start >= ft_strlen(str) || str[start] == '\0')
+	if (start >= ft_strlen(str))
 		return (NULL);
 	new_leftover = malloc((ft_strlen(str) - start + 1) * sizeof(char));
 	if (!new_leftover)
@@ -77,14 +77,14 @@ char	*ft_return_leftover_at_eof(char **leftover)
 {
 	char	*returned_line;
 
-	if (!*leftover)
-		return (NULL);
-	if (*leftover[0] == '\0')
-	{
-		free (*leftover);
-		*leftover = NULL;
-		return (NULL);
-	}
+	// if (!*leftover)
+	// 	return (NULL);
+	// if (*leftover[0] == '\0')
+	// {
+	// 	// free (*leftover);
+	// 	*leftover = NULL;
+	// 	return (NULL);
+	// }
 	returned_line = *leftover;
 	*leftover = NULL;
 	return (returned_line);
@@ -92,27 +92,47 @@ char	*ft_return_leftover_at_eof(char **leftover)
 
 char	*get_next_line(int fd)
 {
-	char			buffer[BUFFER_SIZE + 1];
+	char			*buffer;
 	static char		*leftover = NULL;
 	int				byte_read;
 	char			*temp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (read(fd, 0, 0) < 0)
+	{
+		free(leftover);
+		leftover = NULL;
+		return (NULL);
+	}
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return NULL;
 	while (1)
 	{
 		if (ft_find_newline(leftover) != -1)
+		{
+			free(buffer);
 			return (ft_extractline(&leftover));
+		}
 		byte_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[byte_read] = '\0';
 		if (byte_read == -1)
+		{
+			free(buffer);
 			return (NULL);
-		if (byte_read == 0 && ft_strlen(buffer) == 0)
-			return (NULL);
-		// if (byte_read == 0 && leftover == NULL)
+		}
+		// if (byte_read == 1 && ft_strlen(buffer) == 0)
+		// 	return (NULL);
+		// if (byte_read == 1 && buffer[byte_read] == '\0')
+		// 	return (NULL);
+		// if (byte_read == 1 && leftover == NULL)
 		// 	return (NULL);
 		if (byte_read == 0)
+		{
+			free(buffer);
 			return (ft_return_leftover_at_eof(&leftover));
-		buffer[byte_read] = '\0';
+		}
 		temp = leftover;
 		leftover = ft_strjoin(leftover, buffer);
 		free(temp);

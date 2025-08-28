@@ -1,27 +1,18 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug Project (SSH)",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${workspaceFolder}/program",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "setupCommands": [
+    "version": "0.2.0",
+    "configurations": [
         {
-          "description": "Enable pretty-printing",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
+            "name": "(gdb) Launch get_next_line",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/get_next_line",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb"
         }
-      ],
-      "preLaunchTask": "build project",
-      "miDebuggerPath": "/usr/bin/gdb"
-    }
-  ]
+    ]
 }
-

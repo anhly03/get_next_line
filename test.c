@@ -6,7 +6,7 @@
 /*   By: phly <phly@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:04:44 by phly              #+#    #+#             */
-/*   Updated: 2025/08/28 16:19:47 by phly             ###   ########.fr       */
+/*   Updated: 2025/08/28 18:51:29 by phly             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,13 @@ int main(void)
         perror("Error opening file");
         return (1);
     }
-
     while ((line = get_next_line(fd)) != NULL)
     {
-        printf("Line %d: [%s]\n", count, line);
+        printf("Line %d: %s\n", count, line);
         free(line); // nhớ free mỗi line sau khi dùng
         count++;
     }
-
-    printf("EOF reached: get_next_line returned NULL\n");
+    printf("EOF\n");
     close(fd);
     return (0);
 }
