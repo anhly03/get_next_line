@@ -12,6 +12,77 @@
 
 #include "get_next_line.h"
 
+void new_remain(char *remain, char *result)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	if (!remain || !result)
+		return ;
+	while (result[i] && result[i] != '\n')
+		i++;
+	if (!result[i] || !result[i + 1])
+	{
+		remain[0] = '\0';
+		return ;
+	}
+	i++;
+	while (result[i] && j < BUFFER_SIZE)
+		remain[j++] = result[i++];
+	remain[j] = '\0';
+}
+
+static char	*init_remain(char *remain)
+{
+	if (remain && remain[0] != '\0')
+		return (ft_strdup(remain));
+	return (ft_strdup(""));
+}
+
+static int check_read(int byte_reads, char *remain, char *buffer, char *result)
+{
+	if (byte_read == -1)
+	{
+		remain[0] = '\0';
+		free (buffer);
+		free (result);
+		return (1);
+	}
+	return (0);
+}
+
+char	*read_until_nextline(int fd, char *remain)
+{
+	char	*buffer;
+	int		byte_reads;
+	char	*temp;
+	char	*result;
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	result = init_remain(remain);
+	if (!result)
+		return (free(buffer), NULL);
+	byte_reads = 1;
+	while (!ft_strchr(result, '\n') && byte_reads != 0)
+	{
+		byte_reads = read(fd, buffer, BUFFER_SIZE);
+		if (check_read(byte_reads, remain, buffer, result) == 1)
+			return (NULL);
+		buffer[byte_reads] = '\0';
+		temp = result;
+		result = ft_strjoin(temp, buffer);
+		free(temp);
+		if (!result)
+			return (free(buffer), NULL);
+		rerturn (free(buffer), new_remain(remain, result), result);
+	}	
+}
+
+
 char	*ft_get_line_from_leftover(char *str)
 {
 	int		i;
