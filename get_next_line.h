@@ -22,14 +22,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-char	*get_next_line(int fd);
-int		ft_strlen(const char *str);
-int		ft_find_newline(const char *str);
-char	*ft_strdup(const char *str);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_substr(const char *str, size_t start, size_t len);
-char	*ft_get_line_from_leftover(char *str);
-char	*ft_update_leftover(char *str);
-char	*extract_line(char *leftover);
+size_t		ft_strlen(const char *str);
+char		*ft_find_newline(const char *str, int c);
+char		*ft_strdup(const char *str);
+char		*ft_strjoin(const char *s1, const char *s2);
+char		*returned_line(char *buffer);
+void		new_leftover(char *remain, char *result);
+char		*read_until_nextline(int fd, char *remain);
+char		*get_next_line(int fd);
 
 #endif

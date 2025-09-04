@@ -6,7 +6,7 @@
 /*   By: phly <phly@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 21:28:12 by phly              #+#    #+#             */
-/*   Updated: 2025/08/28 18:18:07 by phly             ###   ########.fr       */
+/*   Updated: 2025/09/04 17:19:28 by phly             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,18 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_find_newline(const char *str)
+char	*ft_find_newline(const char *str, int c)
 {
 	int	i;
 
 	i = 0;
-	if (str == NULL)
-		return (-1);
-	while (str[i] != '\0' && str[i])
+	while (str[i] != (char)c)
 	{
-		if (str[i] == '\n')
-			return (i);
+		if (str[i] == '\0')
+			return (NULL);
 		i++;
 	}
-	return (-1);
-}
-
-char *ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (NULL);
+	return ((char *)str);
 }
 
 char	*ft_strdup(const char *str)
@@ -86,7 +66,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t		len_s2;
 	char		*new_str;
 
-
 	if (!s1 || !s2)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
@@ -107,28 +86,24 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (new_str);
 }
 
-char *write_line(char *buffer)
+char	*returned_line(char *buffer)
 {
-	int		i;
 	char	*line;
+	int		i;
+	int		len;
 
 	if (!buffer || buffer[0] == '\0')
 		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (buffer[i] == '\n')
-		i++;
-	line = malloc((i + 1) * sizeof(char));
+	len = 0;
+	while (buffer[len] && buffer[len] != '\n')
+		len++;
+	if (buffer[len] == '\n')
+		len++;
+	line = malloc(len + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-	{
-		line[i] = buffer[i];
-		i++;
-	}
-	if (buffer[i] == '\n')
+	while (i < len)
 	{
 		line[i] = buffer[i];
 		i++;
@@ -136,30 +111,3 @@ char *write_line(char *buffer)
 	line[i] = '\0';
 	return (line);
 }
-
-
-// char	*ft_substr(const char *str, size_t start, size_t len)
-// {
-// 	size_t	str_len;
-// 	size_t	i;
-// 	char	*sub_str;
-
-// 	if (!str)
-// 		return (NULL);
-// 	str_len = ft_strlen(str);
-// 	if (start >= str_len)
-// 		return (ft_strdup(""));
-// 	if (len > str_len - start)
-// 		len = str_len - start;
-// 	sub_str = malloc(len + 1);
-// 	if (!sub_str)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		sub_str[i] = str[start + i];
-// 		i++;
-// 	}
-// 	sub_str[i] = '\0';
-// 	return (sub_str);
-// }
