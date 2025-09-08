@@ -12,86 +12,86 @@
 
 #include "get_next_line.h"
 
-void	new_leftover(char *new_leftover, char *result)
+void	new_leftover(char *new_leftover, char *line)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	if (!new_leftover || !result)
+	if (!new_leftover || !line)
 		return ;
-	while (result[i] && result[i] != '\n')
+	while (line[i] && line[i] != '\n')
 		i++;
-	if (!result[i] || !result[i + 1])
+	if (!line[i] || !line[i + 1])
 	{
-		new_lwftover[0] = '\0';
+		new_leftover[0] = '\0';
 		return ;
 	}
 	i++;
-	while (result[i] && j < BUFFER_SIZE)
-		new_leftover[j++] = result[i++];
-	remain[j] = '\0';
+	while (line[i] && j < BUFFER_SIZE)
+		new_leftover[j++] = line[i++];
+	leftover[j] = '\0';
 }
 
-static char	*init_remain(char *remain)
+static char	*init_leftover(char *leftover)
 {
-	if (remain && remain[0] != '\0')
-		return (ft_strdup(remain));
+	if (leftover && leftover[0] != '\0')
+		return (ft_strdup(leftover));
 	return (ft_strdup(""));
 }
 
 static int	check_read(int byte_reads, char *leftover,
-		char *buffer, char *result)
+		char *buffer, char *returned_line)
 {
 	if (byte_reads == -1)
 	{
 		leftover[0] = '\0';
 		free (buffer);
-		free (result);
+		free (returned_line);
 		return (1);
 	}
 	return (0);
 }
 
-char	*read_until_nextline(int fd, char *remain)
+char	*read_until_nextline(int fd, char *leftover)
 {
 	char	*buffer;
 	int		read_bytes;
 	char	*temp;
-	char	*result;
+	char	*returned_line;
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	result = init_remain(remain);
-	if (!result)
+	returned_line = init_leftover(leftover);
+	if (!returned_line)
 		return (free(buffer), NULL);
 	read_bytes = 1;
-	while (!ft_find_newline(result, '\n') && read_bytes != 0)
+	while (!ft_find_newline(returned_line, '\n') && read_bytes != 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (check_read(read_bytes, remain, buffer, result) == 1)
+		if (check_read(read_bytes, leftover, buffer, returned_line) == 1)
 			return (NULL);
 		buffer[read_bytes] = '\0';
-		temp = result;
-		result = ft_strjoin(temp, buffer);
+		temp = returned_line;
+		returned_line = ft_strjoin(temp, buffer);
 		free(temp);
-		if (!result)
+		if (!returned_line)
 			return (free(buffer), NULL);
 	}
-	return (free(buffer), new_leftover(remain, result), result);
+	return (free(buffer), new_leftover(leftover, returned_line), returned_line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	remain[BUFFER_SIZE + 1];
+	static char	leftover[BUFFER_SIZE + 1];
 	char		*buffer;
 	char		*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_until_nextline(fd, remain);
+	buffer = read_until_nextline(fd, leftover);
 	if (!buffer)
 		return (NULL);
 	next_line = returned_line(buffer);
@@ -103,4 +103,5 @@ char	*get_next_line(int fd)
 	free(buffer);
 	return (next_line);
 }
+
 
