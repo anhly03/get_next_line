@@ -31,7 +31,7 @@ void	new_leftover(char *new_leftover, char *line)
 	i++;
 	while (line[i] && j < BUFFER_SIZE)
 		new_leftover[j++] = line[i++];
-	leftover[j] = '\0';
+	new_leftover[j] = '\0';
 }
 
 static char	*init_leftover(char *leftover)
@@ -103,5 +103,3 @@ char	*get_next_line(int fd)
 	free(buffer);
 	return (next_line);
 }
-
-
