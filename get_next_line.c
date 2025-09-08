@@ -12,25 +12,25 @@
 
 #include "get_next_line.h"
 
-void	new_leftover(char *remain, char *result)
+void	new_leftover(char *new_leftover, char *result)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	if (!remain || !result)
+	if (!new_leftover || !result)
 		return ;
 	while (result[i] && result[i] != '\n')
 		i++;
 	if (!result[i] || !result[i + 1])
 	{
-		remain[0] = '\0';
+		new_lwftover[0] = '\0';
 		return ;
 	}
 	i++;
 	while (result[i] && j < BUFFER_SIZE)
-		remain[j++] = result[i++];
+		new_leftover[j++] = result[i++];
 	remain[j] = '\0';
 }
 
@@ -103,3 +103,4 @@ char	*get_next_line(int fd)
 	free(buffer);
 	return (next_line);
 }
+
